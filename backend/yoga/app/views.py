@@ -13,11 +13,11 @@ def enroll(request , pk=None):
     if request.method == 'POST':
         data = request.data.get('body')
         email = data.get("email")
-        print(email)
         person = People.objects.filter(email__contains =email)
         
         if person.exists():
-            return Response({"msg" : "User already enrolled , please check your fee status"})
+            print("already")
+            return Response({"msg" : "User already enrolled with this email"})
          
         
         serializer = PeopleSerializer(data = data)
@@ -45,14 +45,14 @@ def make_payment(request ,  pk=None):
 
     if fees_paid is False:
         People.objects.filter(email=ema).update(date = datetime.now() , fees = True)
-        return Response({"msg" : "Fee Paid1" })
+        return Response({"msg" : "Fees paid successfully " })
     
     old_month = old_date.month
     curr_month = datetime.today().month
  
     if old_month is not curr_month:
         People.objects.filter(email=ema).update(date = datetime.now() , fees = True)
-        return Response({"msg" : "Fee Paid2" })
+        return Response({"msg" : "Fees paid successfully" })
 
     else:
         return Response({"msg" : "Fee for the current month is Already paid"})

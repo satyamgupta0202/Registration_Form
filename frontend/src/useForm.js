@@ -25,25 +25,11 @@ const useForm = (submitForm, validate) => {
     e.preventDefault();
     setError(validate(values));
     setIsSubmitting(true);
+    // last mai kardena
+    // values.name = "";
+    // values.age = "";
+    // values.email = "";
   };
-
-  // useEffect(() => {
-  //   if (Object.keys(errors).length === 0 && isSubmitting) {
-  //     // http://127.0.0.1:8000/enroll_person/
-  //     console.log(values.username, values.email, values.batch);
-  //     let res = fetch("http://127.0.0.1:8000/enroll_person/", {
-  //       method: "POST",
-  //       crossorigin: true,
-  //       body: JSON.stringify({
-  //         name: values.username,
-  //         email: values.email,
-  //         age: values.age,
-  //         batch: values.batch,
-  //       }),
-  //     });
-  //     submitForm();
-  //   }
-  // }, [errors]);
 
   return { handleChange, values, handleSubmit, errors };
 };

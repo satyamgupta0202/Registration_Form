@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import useForm from "./useForm";
 import validate from "./validateInfo";
 import "./Form.css";
@@ -10,6 +10,15 @@ function FormSignup({ submitForm }) {
     validate
   );
 
+  const [showMessage, setShowMessage] = useState(false);
+  const [message, setMessage] = useState();
+
+  const [showMessageEdit, setShowMessageEdit] = useState(false);
+  const [messageEdit, setMessageEdit] = useState();
+
+  const [showMessagePay, setShowMessagePay] = useState(false);
+  const [messagePay, setMessagePay] = useState();
+
   function submit_enroll() {
     console.log(values);
     axios
@@ -17,7 +26,11 @@ function FormSignup({ submitForm }) {
         body: values,
       })
       .then((response) => {
-        console.log("ho gya bro");
+        setShowMessage(true);
+        setMessage(response.data["msg"]);
+        // return <h1>{response.data["msg"]}</h1>;
+        console.log(response.data["msg"]);
+        // alert(response.data["msg"]);
       });
   }
 
@@ -28,7 +41,10 @@ function FormSignup({ submitForm }) {
         body: values,
       })
       .then((response) => {
-        console.log("ho gya edit bro");
+        setShowMessageEdit(true);
+        setMessageEdit(response.data["msg"]);
+        // return <h1>{response.data["msg"]}</h1>;
+        console.log(response.data["msg"]);
       });
   }
 
@@ -39,7 +55,10 @@ function FormSignup({ submitForm }) {
         body: values,
       })
       .then((response) => {
-        console.log("ho gya payment bro");
+        setShowMessagePay(true);
+        setMessagePay(response.data["msg"]);
+        // return <h1>{response.data["msg"]}</h1>;
+        console.log(response.data["msg"]);
       });
   }
 
@@ -123,8 +142,8 @@ function FormSignup({ submitForm }) {
             >
               Enroll
             </button>
+            {showMessage && <p>{message}</p>}
           </div>
-
           <div>
             <button
               className="form-input-btn2"
@@ -134,6 +153,7 @@ function FormSignup({ submitForm }) {
             >
               Edit Batch
             </button>
+            {showMessageEdit && <p>{messageEdit}</p>}
           </div>
 
           <div>
@@ -145,6 +165,7 @@ function FormSignup({ submitForm }) {
             >
               Make Payment
             </button>
+            {showMessagePay && <p>{messagePay}</p>}
           </div>
         </div>
       </form>
