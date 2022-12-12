@@ -26,6 +26,7 @@ function FormSignup({ submitForm }) {
         body: values,
       })
       .then((response) => {
+        console.log(response);
         setShowMessage(true);
         setMessage(response.data["msg"]);
         // return <h1>{response.data["msg"]}</h1>;
@@ -65,7 +66,8 @@ function FormSignup({ submitForm }) {
   return (
     <div className="form-content-right">
       <form className="form" onSubmit={handleSubmit}>
-        <h1>Get started us with today !!!! Join today for the Yoga Classes</h1>
+        <h1>Health is Wealth!!</h1>
+        <h2>Fill Form to join FlexYoga Classes</h2>
         {/* user name */}
         <div className="form-inputs">
           <label htmlFor="name" className="form-label">

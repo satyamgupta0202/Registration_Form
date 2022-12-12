@@ -5,13 +5,19 @@ from .serializers import PeopleSerializer
 from django.http import HttpResponse
 from datetime import datetime
 from rest_framework.response import Response
-
+from .validate import validate
 # Create your views here.
 
 @api_view(['POST'])
-def enroll(request , pk=None):
+def enroll(request , pk=None): 
     if request.method == 'POST':
         data = request.data.get('body')
+        res = validate(data)
+        ok = res['ok']
+        if ok is False:
+            res["msg"]="Check your fields"
+            return Response(res)
+
         email = data.get("email")
         person = People.objects.filter(email__contains =email)
         
@@ -32,7 +38,12 @@ def enroll(request , pk=None):
 def make_payment(request ,  pk=None):
 
     data = request.data.get('body')
-    print(data)
+    res = validate(data)
+    ok = res['ok']
+    if ok is False:
+        res["msg"]="Check your fields"
+        return Response(res)
+
     ema = data.get("email")
     person = People.objects.filter(email =ema)
     
@@ -61,9 +72,13 @@ def make_payment(request ,  pk=None):
 
 @api_view(['PUT'])
 def edit_batch(request , pk = None):
-
-    print(request.data.get('body'))
     data = request.data.get('body')
+    res = validate(data)
+    ok = res['ok']
+    if ok is False:
+        res["msg"]="Check your fields"
+        return Response(res)
+        
     new_batch = data.get('batch')
     ema = data.get("email")
 
